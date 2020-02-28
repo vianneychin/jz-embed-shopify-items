@@ -17,6 +17,14 @@ const renderCard = (title, price, src) => {
 
 const shopifyUrl = "https://cznd.co/collections/julianna-zobrist/products.json";
 
+/* Use Regex to manipulate the image. */
+/* _600x600_crop_center */
+
+/* IMG_4861_600x600_crop_center.png */
+/* IMG_4861.png */
+
+/* convert to xml/xhr */
+/* Run it through babel for es2015 */
 const renderShopifyItems = async () => {
   const response = await fetch(shopifyUrl);
 
