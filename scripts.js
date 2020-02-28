@@ -9,13 +9,15 @@ const resizeImageUrl = imgUrl => {
     if (imgUrl.includes("jpg")) {
       const firstPart = imgUrl.slice(0, imgUrl.indexOf(".jpg")),
         secondPart = imgUrl.slice(imgUrl.indexOf(".jpg"));
-      return firstPart + "_600x600_crop_center" + secondPart;
+
+      return firstPart + "_600x700_crop_center" + secondPart;
     }
 
     if (imgUrl.includes(".png")) {
       const firstPart = imgUrl.slice(0, imgUrl.indexOf(".png")),
         secondPart = imgUrl.slice(imgUrl.indexOf(".png"));
-      return firstPart + "_600x600_crop_center" + secondPart;
+
+      return firstPart + "_600x700_crop_center" + secondPart;
     }
   } else {
     /* If it's something other than .png || .jpg we will just return it. */
@@ -29,49 +31,47 @@ const renderCard = (title, price, src) => {
   return app.insertAdjacentHTML(
     "afterbegin",
     `
-    <div class="card">
-    <img class="item-img" src="${resizeImageUrl(src)}" />
-    <div class="text-container">
-    <h3 class="item-text">${title}</h3>
-    <p class="item-price">$${price}</p>
-    </div>
-    </div>
+      <div class="card">
+        <img class="item-img" src="${resizeImageUrl(src)}" />
+        <div class="text-container">
+          <h3 class="item-text">${title}</h3>
+          <p class="item-price">$${price}</p>
+        </div>
+      </div>
 		`
   );
 };
 
-const shopifyUrl = "https://cznd.co/collections/julianna-zobrist/products.json";
+const shopifyUrl =
+  "https://cors-anywhere.herokuapp.com/https://cznd.co/collections/julianna-zobrist/products.json";
 
-/* Use Regex to manipulate the image. */
-/* _600x600_crop_center */
+const getShopifyItems = url => {
+  let req = new XMLHttpRequest();
 
-/* IMG_4861.png */
-/* IMG_4861_600x600_crop_center.png */
+  req.onreadystatechange = function() {
+    if (this.readyState === 4) {
+      if (this.status === 200) {
+        document.body.className = "ok";
+        const res = JSON.parse(this.responseText);
 
-/* convert to xml/xhr */
-/* Run it through babel for es2015 */
+        return renderShopifyItems(res);
+      } else if (this.response == null && this.status === 0) {
+        document.body.className = "error offline";
+      } else {
+        document.body.className = "error";
+      }
+    }
+  };
+  req.open("GET", url, true);
+  req.send(null);
+};
 
-/*  Final Desired Result:
-  If the string is either '.jpg' or '.png'
-  Append _600x600_crop_center to it.
-  */
-
-/*
- First try to get a match of .jpg or .png that returns true or false.
- */
-
-const renderShopifyItems = async () => {
-  const response = await fetch(shopifyUrl);
-
-  const data = await response.json();
-
-  const products = data.products;
+const renderShopifyItems = async res => {
+  const products = res.products;
 
   products.map(item => {
-    console.log(item.images[0].src);
-    console.log(item.images[0].src.length, "🙂 length");
     return renderCard(item.title, item.variants[0].price, item.images[0].src);
   });
 };
 
-renderShopifyItems();
+getShopifyItems(shopifyUrl);
