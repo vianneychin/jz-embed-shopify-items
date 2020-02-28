@@ -28,57 +28,53 @@ body {
   justify-content: center;
 }
 
-.card {
+.card-container {
   width: 270px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1.3em;
 }
-
-.item-img {
+.card-img {
   width: 100%;
 }
-.text-container {
+.card-text-container {
+  width: 100%;
+  height: 100%;
   text-align: center;
+  /* margin: 10px 0; */
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
-.item-text {
+.card-text {
   font-size: 0.75em;
   font-weight: 700;
+  text-transform: uppercase;
 }
-.item-price {
-  font-weight: 300;
+.card-price {
   font-size: 0.75em;
+  color: #333;
 }
 
 /* Media queries for fluid and bigger pictures. */
+
+/* 3 columns */
 @media screen and (max-width: 1139px) {
-  #app {
-    max-width: 1080px;
-  }
   .card {
     width: 300px;
   }
 }
 
+/* 2 columns */
 @media screen and (max-width: 959px) {
   .card {
     width: 50%;
   }
 }
 
-@media screen and (min-width: 875px) {
-  #app {
-    max-width: 1080px;
-  }
-}
-
-@media screen and (min-width: 875px) {
-  #app {
-    max-width: 1080px;
-  }
-}
-
+/* 1 column */
 @media screen and (max-width: 659px) {
   #app {
     max-width: 1080px;
