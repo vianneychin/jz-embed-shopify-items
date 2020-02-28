@@ -27,37 +27,36 @@ var resizeImageUrl = function resizeImageUrl(imgUrl) {
   }
 };
 
-var app = document.getElementById("app");
+var app = document.getElementById("embedded-shopify-cznd");
 
-/* This is the uncompiled version
-  const renderCard = (title, price, src) => {
-    return app.insertAdjacentHTML(
-      "afterbegin",
-      `
-        <div class="card-container">
+// This is the uncompiled version
+const renderCard = (title, price, src, handle) => {
+  return app.insertAdjacentHTML(
+    "afterbegin",
+    `
+        <a href="https://cznd.co/collections/julianna-zobrist/products/${handle}" class="card-container">
           <img class="card-img" src="${resizeImageUrl(src)}" />
           <div class="card-text-container">
             <h3 class="card-text">${title}</h3>
             <p class="card-price">${"$ " + price}</p>
           </div>
-        </div>
+        </a>
       `
-    );
-  };
-*/
-
-var renderCard = function renderCard(title, price, src) {
-  return app.insertAdjacentHTML(
-    "afterbegin",
-    '\n      <div class="card-container">\n        <img class="card-img" src="'
-      .concat(
-        resizeImageUrl(src),
-        '" />\n        <div class="card-text-container">\n          <h3 class="card-text">'
-      )
-      .concat(title, '</h3>\n          <p class="card-price">')
-      .concat("$ " + price, "</p>\n        </div>\n      </div>\n\t\t")
   );
 };
+
+// var renderCard = function renderCard(title, price, src) {
+//   return app.insertAdjacentHTML(
+//     "afterbegin",
+//     '\n      <div class="card-container">\n        <img class="card-img" src="'
+//       .concat(
+//         resizeImageUrl(src),
+//         '" />\n        <div class="card-text-container">\n          <h3 class="card-text">'
+//       )
+//       .concat(title, '</h3>\n          <p class="card-price">')
+//       .concat("$ " + price, "</p>\n        </div>\n      </div>\n\t\t")
+//   );
+// };
 
 var shopifyUrl =
   "https://cors-anywhere.herokuapp.com/https://cznd.co/collections/julianna-zobrist/products.json";
@@ -70,6 +69,7 @@ var fetchShopifyUrl = function fetchShopifyUrl(url) {
       if (this.status === 200) {
         document.body.className = "ok";
         var res = JSON.parse(this.responseText);
+        console.log(res);
         return renderShopifyItems(res);
       } else if (this.response == null && this.status === 0) {
         document.body.className = "error offline";
@@ -87,7 +87,13 @@ var fetchShopifyUrl = function fetchShopifyUrl(url) {
 var renderShopifyItems = async function renderShopifyItems(res) {
   var products = res.products;
   products.map(function(item) {
-    return renderCard(item.title, item.variants[0].price, item.images[0].src);
+    console.log(item.handle);
+    return renderCard(
+      item.title,
+      item.variants[0].price,
+      item.images[0].src,
+      item.handle
+    );
   });
 };
 
