@@ -19,53 +19,21 @@ body {
 #app {
   display: flex;
   flex-wrap: wrap;
+  /* Removes extra spacing in between flex-wraps */
+  align-content: flex-start;
   width: 100%;
   height: 100%;
-  max-width: 800px;
+  max-width: 1080px;
   margin: 85px 30px 23px 30px;
   justify-content: center;
 }
-/* For 4 pics */
-/* On window 1411px -> to max-width: 1080px; */
 
 .card {
-  width: 200px;
+  width: 270px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1.3em;
-}
-/* For 4 pics */
-/* On window 1411px -> width: 270px; */
-
-@media screen and (max-width: 1111px) {
-  #app {
-    max-width: 1080px;
-  }
-
-  .card {
-    width: 300px;
-  }
-}
-
-@media screen and (min-width: 875px) {
-  #app {
-    max-width: 1080px;
-  }
-
-  .card {
-    width: 270px;
-  }
-}
-
-@media screen and (max-width: 659px) {
-  #app {
-    max-width: 1080px;
-  }
-
-  .card {
-    width: 80%;
-  }
 }
 
 .item-img {
@@ -81,4 +49,41 @@ body {
 .item-price {
   font-weight: 300;
   font-size: 0.75em;
+}
+
+/* Media queries for fluid and bigger pictures. */
+@media screen and (max-width: 1139px) {
+  #app {
+    max-width: 1080px;
+  }
+  .card {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .card {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 875px) {
+  #app {
+    max-width: 1080px;
+  }
+}
+
+@media screen and (min-width: 875px) {
+  #app {
+    max-width: 1080px;
+  }
+}
+
+@media screen and (max-width: 659px) {
+  #app {
+    max-width: 1080px;
+  }
+  .card {
+    width: 80%;
+  }
 }
