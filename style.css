@@ -21,7 +21,7 @@ body {
   flex-wrap: wrap;
   width: 100%;
   height: 100%;
-  padding: 10px;
+  max-width: 1200px;
 }
 
 .card {
@@ -54,10 +54,19 @@ body {
   font-weight: 600;
   font-size: 0.75em;
 }
-.store-button {
-  height: 25px;
-  width: 50%;
-  background: #333;
-  color: #fff;
-  margin: auto;
+
+@media only screen and (max-width: 640px) {
+  #app {
+    padding: 45px 20px 75px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #app {
+    padding: 45px 35px 75px;
+  }
+}
+
+#app {
+  padding: 85px 30px 23px 30px;
 }
